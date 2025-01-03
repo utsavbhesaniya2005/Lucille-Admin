@@ -1,0 +1,22 @@
+.header{
+    width: calc(100% - 250px);
+    margin-left: 250px;
+    background-color: #01C0C8;
+    transition: all 0.3s ease-in-out;
+}
+.header.close-header{
+    width: calc(100% - 60px);
+    margin-left: 60px;
+}
+.search{
+    background-color: white !important;
+}
+.search-icon{
+    color: #6c757d;
+}
+.menu-icon{
+    color: white;
+}
+.menu-icon svg{
+    font-size: 28px !important;
+}

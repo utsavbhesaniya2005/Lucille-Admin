@@ -1,0 +1,41 @@
+.dashboard {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    width: calc(100% - 250px);
+    margin-left: 250px;
+    margin-top: 68px;
+    transition: all 0.3s linear;
+}
+.sidebar-collapsed .dashboard{
+    width: calc(100% - 60px);
+    margin-left: 60px;
+}
+h2 {
+    font-size: 42px !important;
+    font-weight: 800;
+    color: rgb(32, 5, 5) !important;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    margin: 0 0 10px;
+}
+.heading-area{
+    padding: 14px 10px;
+    box-shadow: 1px 0 20px rgba(0, 0, 0, .1);
+    background-color: white;
+    width: 100%;
+}
+.heading h4{
+    padding: 0 10px;
+    color: rgb(33, 37, 41);
+    font-size: 20px;
+    font-weight: 400;
+}
+.breadcrumb-item a{
+    text-decoration: none !important;
+    color: #212529;
+    font-size: 16px;
+    font-weight: 500;
+}
+.breadcrumb-item:nth-child(2) a{
+    color: #01C0C8;
+}

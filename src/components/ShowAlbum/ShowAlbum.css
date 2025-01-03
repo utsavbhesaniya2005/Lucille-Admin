@@ -1,0 +1,109 @@
+.album-card{
+    width: 100%;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+    position: relative;
+    transition: all 0.3s ease-in-out;
+}
+.album-card:hover{
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+}
+.album-card:hover .album-image img{
+    transform: scale(1.15);
+}
+.album-card:hover .album-image .black-shade{
+    bottom: 0;
+}
+.album-image{
+    position: relative;
+    overflow: hidden;
+}
+.album-image img{
+    width: 100%;
+    aspect-ratio: 1/1;
+    display: block;
+    transition: all 0.3s ease-in-out;
+}
+.black-shade{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    left: 0;
+    bottom: -100%;
+    background-color: rgb(0, 0, 0, 0.5);
+    z-index: 0;
+    transition: all 0.2s ease-in-out;
+}
+.album-duration{
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    z-index: 1;
+}
+.play-button{
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #f10909;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 14px;
+    cursor: pointer;
+    opacity: 0;
+    z-index: 1;
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+.album-image:hover .play-button{
+    opacity: 1;
+    transform: translateX(-50%) translateY(-5px);
+}
+.album-details{
+    padding: 10px;
+}
+.album-details h3{
+    margin: 10px 0 5px;
+    font-size: 18px;
+}
+.album-details p{
+    margin: 0;
+    color: #666;
+    font-size: 14px;
+}
+.btn-container {
+    margin-top: 10px;
+    display: flex;
+    column-gap: 5px;
+    justify-content: space-between;
+    animation-delay: 1.5s;
+}
+.btn-container button{
+    width: 50%;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+.btn-container .btn-warning{
+    background-color: #ffca2c !important;
+}
+.btn-container .btn-danger{
+    background-color: #e74a3b !important;
+}
+.btn-container .btn-warning:hover {
+    transform: translateY(-5px);
+}
+.btn-container .btn-danger:hover {
+    transform: translateY(-5px);
+}
+.album-card:hover .btn-container button {
+    transform: translateY(-5px);
+}

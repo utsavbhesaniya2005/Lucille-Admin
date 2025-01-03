@@ -1,0 +1,79 @@
+.sidebar{
+    background-color: white;
+    width: 250px;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    z-index: 8;
+    overflow-y: scroll;
+    box-shadow: 10px 0px 25px -3px rgb(0 0 0 / 0.2), 10px 0px 6px -4px rgb(0 0 0 / 0.2);
+    transition: all 0.3s ease-in-out;
+}
+.sidebar::-webkit-scrollbar{
+    width: 5px;
+}
+.sidebar::-webkit-scrollbar-thumb{
+    width: 5px;
+    border-radius: 8px;
+    background-color: rgb(108, 117, 125, .55);
+}
+.sidebar.collapsed{
+    width: 60px;
+}
+.sidebar.collapsed .header{
+    margin-left: 0;
+}
+.sidebar .menubar ul li .menu-item{
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.3s ease, visibility 0s 0.3s;
+}
+.sidebar.collapsed .menubar ul li .menu-item{
+    visibility: hidden;
+    opacity: 0; 
+    transition: visibility 0s, opacity 0.3s ease-in-out;
+}
+.top-logo{
+    background-color: #01C0C8;
+}
+.top-logo img{
+    height: 68px;
+    width: 100%;
+}
+.menubar ul li{
+    transition: all 0.1s ease-in-out;
+    color: #6c757d;
+}
+.menubar ul li:nth-child(2), .menubar ul li:nth-child(2) .menu-item,.menubar ul li:hover .menu-item, .menubar ul li:hover, .menubar ul li:active .menu-item{
+    color: #01C0C8 !important;
+}
+.menubar ul .nav-small{
+    font-size: 12px;
+    color: #6c757d;
+    padding: 30px 14px 14px 0;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+.menubar ul li, .menubar ul li .menu-item{
+    vertical-align: middle;
+}
+.menubar ul li .menu-item{
+    font-weight: 600;
+    font-size: 16px;
+}
+.sidebar .menubar .text-sm:hover {
+    color: #01C0C8; 
+    background-color: transparent;
+}
+.menu-option a{
+    display: block;
+    transition: all 0.2s ease-in-out;
+    color: #6c757d;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 8px 0px !important; 
+    text-align: left !important;
+}
+.menu-option:hover a{
+    color: #01C0C8;
+}
