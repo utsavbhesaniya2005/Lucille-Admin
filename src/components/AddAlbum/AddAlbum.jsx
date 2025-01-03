@@ -92,7 +92,9 @@ const AddAlbum = () => {
                                 <div className="col-7">
                                     <div className="breacrumb-area flex justify-content-end pe-1 pt-1 w-full">
                                         <Breadcrumb>
-                                            <Breadcrumb.Item>Home</Breadcrumb.Item>
+                                            <Breadcrumb.Item>
+                                                <Link to='/'>Home</Link>
+                                            </Breadcrumb.Item>
                                             <Breadcrumb.Item>
                                                 <Link to="/addAlbum">Add Album Page</Link>
                                             </Breadcrumb.Item>

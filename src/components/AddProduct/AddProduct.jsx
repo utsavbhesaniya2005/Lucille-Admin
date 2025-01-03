@@ -6,6 +6,7 @@ import { Link, useNavigate } from "react-router";
 import "./AddProduct.css"; 
 import { useDispatch } from "react-redux";
 import { addAlbumAsync } from "../../services/actions/AlbumAction";
+import { addProductAsync } from "../../services/actions/ProductAction";
 
 const AddProduct = () => {
     const [collapsed, setCollapsed] = useState(false);
@@ -17,57 +18,32 @@ const AddProduct = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const [addArtist, setAddArtist] = useState({
-        aname : '',
-        dob : '',
-        gender : 'Male',
-        aimage : '',
-        genre : ["Edm"],
-        desc : ''
+    const [addProduct, setAddProduct] = useState({
+        pname : '',
+        price : '',
+        pdesc : '',
+        pimage : ''
     });
 
     const handleInput = (e) => {
 
         const { name, value, files, type, checked } = e.target;
     
-        if(name === "aimage" && files.length > 0){
+        if(name === "pimage" && files.length > 0){
 
             const file = files[0];
             const reader = new FileReader();
             reader.onloadend = () =>{
                 
-                setAddArtist((prevData) => ({
+                setAddProduct((prevData) => ({
                     ...prevData,
                     [name] : reader.result,
                 }));
             };
             reader.readAsDataURL(file);
 
-        } else if (type === "checkbox") {
-            
-            setAddArtist((prevData) => {
-                const genres = prevData.genre;
-                if(checked){
-                
-                    return {
-                        ...prevData,
-                        genre: [...genres, value],
-                    };
-                } else {
-    
-                    return {
-                        ...prevData,
-                        genre: genres.filter((g) => g !== value),
-                    };
-                }
-            });
-        }else if(type === "radio") {
-            setAddArtist((prevData) => ({
-                ...prevData,
-                [name]: value,
-            }));
         }else{
-            setAddArtist((prevData) => ({
+            setAddProduct((prevData) => ({
                 ...prevData,
                 [name]: value,
             }));
@@ -75,18 +51,15 @@ const AddProduct = () => {
     }
 
     const handleSubmit = (e) => {
+        
         e.preventDefault();
+        dispatch(addProductAsync(addProduct));
 
-        console.log(addArtist);
-        dispatch(addAlbumAsync(addArtist));
-
-        setAddArtist({
-            aname : '',
-            dob : '',
-            gender : 'Male',
-            aimage : '',
-            genre : ["Edm"],
-            desc : ''
+        setAddProduct({
+            pname : '',
+            price : '',
+            pdesc : '',
+            pimage : ''
         });
 
         navigate('/');
@@ -104,15 +77,17 @@ const AddProduct = () => {
                             <div className="heading-area flex items-center bg-white">
                                 <div className="col-5">
                                     <div className="heading">
-                                        <h4>Add Artist Page</h4>
+                                        <h4>Add Product Page</h4>
                                     </div>
                                 </div>
                                 <div className="col-7">
                                     <div className="breacrumb-area flex justify-content-end pe-1 pt-1 w-full">
                                         <Breadcrumb>
-                                            <Breadcrumb.Item>Home</Breadcrumb.Item>
                                             <Breadcrumb.Item>
-                                                <Link to="/addArtist">Add Artist Page</Link>
+                                                <Link to='/'>Home</Link>
+                                            </Breadcrumb.Item>
+                                            <Breadcrumb.Item>
+                                                <Link to="/addProduct">Add Product Page</Link>
                                             </Breadcrumb.Item>
                                         </Breadcrumb>
                                     </div>
@@ -123,53 +98,30 @@ const AddProduct = () => {
 
                     <div className="row mx-auto">
                         <div className="col-12">
-                            <div className="flex justify-center items-center w-full h-full min-h-screen">
+                            <div className="flex justify-center items-center w-full h-full mt-3">
                                 <form className="w-full bg-white p-[25px] shadow-md rounded" onSubmit={handleSubmit} >
                                     <h6 className="text-xl mb-[45px] text-left bg-white">
-                                        Add Artist
+                                        Add Product
                                     </h6>
 
                                     <div className="mb-6">
                                         <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name" >Name</label>
-                                        <input id="name" type="text" value={addArtist.name} onChange={handleInput} name="aname" placeholder="Enter Artist Name" className="gradient-border w-full py-2 px-1 border-b border-gray-300 focus:outline-none" />
+                                        <input id="name" type="text" value={addProduct.pname} onChange={handleInput} name="pname" placeholder="Enter Product Name" className="gradient-border w-full py-2 px-1 border-b border-gray-300 focus:outline-none" />
                                     </div>
 
                                     <div className="mb-6">
-                                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="dob" >Date of Birth</label>
-                                        <input id="dob" type="date" value={addArtist.dob} onChange={handleInput} name="dob" className="gradient-border w-full py-2 px-1 border-b border-gray-300 focus:outline-none" />
+                                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="price" >Price</label>
+                                        <input id="price" type="number" value={addProduct.price} onChange={handleInput} name="price" placeholder="Enter Product Price" className="gradient-border w-full py-2 px-1 border-b border-gray-300 focus:outline-none" />
                                     </div>
 
                                     <div className="mb-6">
-                                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="gender" >Gender</label>
-                                        <div className="gender flex items-center column-gap-2">
-                                            <input type="radio" name="gender" value='Male' onChange={handleInput} checked={addArtist.gender === 'Male'} />Male
-                                            <input type="radio" name="gender" value='Female' onChange={handleInput} checked={addArtist.gender === 'Female'} />Female
-                                            <input type="radio" name="gender" value='Other' onChange={handleInput} checked={addArtist.gender === 'Other'} />Other
-                                        </div>
-                                    </div>
-
-                                    <div className="mb-6">
-                                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="profileImage">Profile Image</label>
-                                        <input id="profileImage" type="file" name="aimage" onChange={handleInput} className="gradient-border w-full py-2 px-1 border-b border-gray-300 focus:outline-none" />
-                                    </div>
-
-                                    <div className="mb-6">
-                                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="genre">Genre</label>
-                                        <div className="flex flex-wrap gap-4">
-                                            {
-                                                ["Edm", "Classical", "Indie-Pop", "Hip-Hop", "Rock"].map((genre) => (
-                                                    <label key={genre} className="inline-flex items-center" >
-                                                        <input type="checkbox" value={genre} className="form-checkbox h-4 w-4 text-blue-600" checked={addArtist.genre.includes(genre)} name="genre" onChange={handleInput} />
-                                                        <span className="ml-2 text-gray-700">{genre}</span>
-                                                    </label>
-                                                ))
-                                            }
-                                        </div>
+                                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="proImage">Product Image</label>
+                                        <input id="proImage" type="file" name="pimage" onChange={handleInput} className="gradient-border w-full py-2 px-1 border-b border-gray-300 focus:outline-none" />
                                     </div>
 
                                     <div className="mb-6">
                                         <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="desc">Description</label>
-                                        <textarea id="desc" name="desc" value={addArtist.desc} onChange={handleInput} placeholder="Enter description" className="gradient-border w-full py-2 px-1 border-b border-gray-300 focus:outline-none" ></textarea>
+                                        <textarea id="desc" name="pdesc" value={addProduct.desc} onChange={handleInput} placeholder="Enter description" className="gradient-border w-full py-2 px-1 border-b border-gray-300 focus:outline-none" ></textarea>
                                     </div>
 
                                     <div className="flex justify-between items-center">
@@ -183,7 +135,7 @@ const AddProduct = () => {
 
                     <div className="row mx-auto">
                         <div className="col-12">
-                            <div className="flex justify-center items-center w-full mb-[25px]">
+                            <div className="flex justify-center items-center w-full mb-[25px] mt-[25px]">
                                 <form className="w-full h-full bg-white p-[25px] shadow-md rounded">
                                     <h6 className="text-xl mb-[45px] text-left bg-white">
                                         Social Information
