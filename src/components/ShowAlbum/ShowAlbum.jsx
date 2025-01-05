@@ -36,7 +36,7 @@ const ShowAlbum = () => {
         <>
             <Header collapsed={collapsed} toggleSidebar={toggleSidebar} />
             <Sidebar collapsed={collapsed} />
-            <div className={`dashbaord-wrapper ${collapsed ? 'sidebar-collapsed' : ''} bg-[#E7EAEE]`}>
+            <div className={`dashboard-wrapper ${collapsed ? 'sidebar-collapsed' : ''} bg-[#E7EAEE]`}>
                 <div className={`dashboard`}>
                     <div className="container">
                         <div className="row gap-y-8 items-center">

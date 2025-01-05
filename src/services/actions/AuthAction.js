@@ -120,8 +120,9 @@ export const signInAsync = (admin) => {
         .then((res) => {
 
             let signInAdmin = {
-                uid : res.admin.uid,
-                email : res.admin.email
+                uid : res.user.uid,
+                email : res.user.email,
+                uname : res.user.displayName
             };
             localStorage.setItem('loginId', JSON.stringify(signInAdmin.uid));
             dispatch(adminSignInSuc(signInAdmin))

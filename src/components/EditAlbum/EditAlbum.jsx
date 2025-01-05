@@ -3,7 +3,7 @@ import Header from "../Header/Header";
 import Sidebar from "../Sidebar/Sidebar";
 import { Breadcrumb } from "react-bootstrap";
 import { Link, useNavigate, useParams } from "react-router";
-import "./EditAlbum.css"; 
+import "../AddAlbum/AddAlbum.css"; 
 import { useDispatch, useSelector } from "react-redux";
 import { findAlbumsAsync, updateAlbumAsync } from "../../services/actions/AlbumAction";
 
@@ -79,6 +79,10 @@ const EditAlbum = () => {
         navigate('/allAlbums');
     }
 
+    const handleBack = () => {
+        navigate(-1);
+    }
+
     useEffect(() => {
         dispatch(findAlbumsAsync(id));
     }, []);
@@ -93,7 +97,7 @@ const EditAlbum = () => {
     <>
         <Header collapsed={collapsed} toggleSidebar={toggleSidebar} />
         <Sidebar collapsed={collapsed} />
-        <div className={`dashbaord-wrapper ${collapsed ? "sidebar-collapsed" : ""} bg-[#E7EAEE]`} >
+        <div className={`dashboard-wrapper ${collapsed ? "sidebar-collapsed" : ""} bg-[#E7EAEE]`} >
             <div className={`dashboard`}>
                 <div className="container">
                     <div className="row gap-y-8 items-center mb-[25px]">
@@ -145,7 +149,7 @@ const EditAlbum = () => {
 
                                     <div className="mb-6">
                                         <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="albumDura" >Album Duration</label>
-                                        <input id="albumDura" type="number" value={editAlbum.albumDura} onChange={handleInput} name="albumDura" placeholder="Total Time Of The Album Ex:- 25:31" className="gradient-border w-full py-2 px-1 border-b border-gray-300 focus:outline-none" />
+                                        <input id="albumDura" type="number" value={editAlbum.albumDura} onChange={handleInput} name="albumDura" placeholder="Total Time Of The Album Ex:- 25" className="gradient-border w-full py-2 px-1 border-b border-gray-300 focus:outline-none" />
                                     </div>
 
                                     <div className="mb-6">
@@ -170,7 +174,7 @@ const EditAlbum = () => {
 
                                     <div className="flex justify-between items-center">
                                         <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded focus:outline-none" >Submit</button>
-                                        <button type="button" className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-6 rounded focus:outline-none">Cancel</button>
+                                        <button type="button" className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-6 rounded focus:outline-none" onClick={handleBack}>Cancel</button>
                                     </div>
                                 </form>
                             </div>

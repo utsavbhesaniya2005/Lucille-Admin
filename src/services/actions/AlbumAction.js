@@ -94,15 +94,20 @@ export const getAlbumAsync = () => {
 
         try{
 
+            const adminLoginId = JSON.parse(localStorage.getItem('loginId'));
+
             let getdata = await getDocs(collection(db, 'albums'));
 
             let albums = [];
 
             getdata.forEach((doc) => {
                 
-                let albumData = doc.data();
-                albumData.id = doc.id;
-                albums.push(albumData);
+                if(adminLoginId === doc.data().adminId){
+
+                    let albumData = doc.data();
+                    albumData.id = doc.id;
+                    albums.push(albumData);
+                }
             }); 
 
             dispatch(getAlbumSuc(albums));

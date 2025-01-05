@@ -16,57 +16,57 @@ const addProductRej = (err) => {
     }
 }
 
-const getAlbumSuc = (data) => {
+const getProductSuc = (data) => {
 
     return{
-        type : 'GET_ALBUMS_SUC',
+        type : 'GET_PRODUCTS_SUC',
         payload : data
     }
 }
 
-const getAlbumRej = (err) => {
+const getProductRej = (err) => {
 
     return{
-        type : 'GET_ALBUMS_REJ',
+        type : 'GET_PRODUCTS_REJ',
         payload : err
     }
 }
 
-const findAlbumSuc = (album) => {
+const findProductSuc = (product) => {
 
     return{
-        type : 'FIND_ALBUM_SUC',
-        payload : album
+        type : 'FIND_PRODUCT_SUC',
+        payload : product
     }
 }
 
-const updateAlbumSuc = (album) => {
+const updateProductSuc = (product) => {
 
     return{
-        type : 'UPDATE_ALBUM_SUC',
-        payload : album
+        type : 'UPDATE_PRODUCT_SUC',
+        payload : product
     }
 }
 
-const updateAlbumRej = (err) => {
+const updateProductRej = (err) => {
 
     return{
-        type : 'UPDATE_ALBUM_REJ',
+        type : 'UPDATE_PRODUCT_REJ',
         payload : err
     }
 }
 
-const deleteAlbumSuc = () => {
+const deleteProductSuc = () => {
 
     return{
-        type : 'DELETE_ALBUM_SUC'
+        type : 'DELETE_PRODUCT_SUC'
     }
 }
 
-const deleteAlbumRej = (err) => {
+const deleteProductRej = (err) => {
 
     return{
-        type : 'DELETE_ALBUM_REJ',
+        type : 'DELETE_PRODUCT_REJ',
         payload : err
     }
 }
@@ -88,47 +88,51 @@ export const addProductAsync = (data) => {
     }
 } 
 
-export const getAlbumAsync = () => {
+export const getProductAsync = () => {
 
     return async dispatch => {
 
         try{
 
-            let getdata = await getDocs(collection(db, 'albums'));
+            const adminLoginId = JSON.parse(localStorage.getItem('loginId'));
 
-            let albums = [];
+            let getdata = await getDocs(collection(db, 'products'));
+
+            let products = [];
 
             getdata.forEach((doc) => {
                 
-                let albumData = doc.data();
-                albumData.id = doc.id;
-                albums.push(albumData);
+                if(adminLoginId === doc.data().adminId){
+
+                    let productData = doc.data();
+                    productData.id = doc.id;
+                    products.push(productData);
+                }
             }); 
 
-            dispatch(getAlbumSuc(albums));
+            dispatch(getProductSuc(products));
 
         }catch(err){
 
-            dispatch(getAlbumRej(err.code));
+            dispatch(getProductRej(err.code));
         }
         
     }
 }
 
-export const findAlbumsAsync = (id) => {
+export const findProductsAsync = (id) => {
 
     return async dispatch => {
 
         try{
 
-            let findRec = await getDoc(doc(db, 'albums', `${id}`));
+            let findRec = await getDoc(doc(db, 'products', `${id}`));
             let getData = findRec.data();
             getData.id = findRec.id;
 
             console.log("Get",getData);
-            
 
-            dispatch(findAlbumSuc(getData));
+            dispatch(findProductSuc(getData));
         }catch(err){
             
             console.log(err);
@@ -137,32 +141,32 @@ export const findAlbumsAsync = (id) => {
     }
 }   
 
-export const updateAlbumAsync = (data) => {
+export const updateProductAsync = (data) => {
 
     return async dispatch => {
 
         try{
 
-            let updateRec = await setDoc(doc(db, "albums", `${data.id}`), data);
-            dispatch(updateAlbumSuc(updateRec));
+            let updateRec = await setDoc(doc(db, "products", `${data.id}`), data);
+            dispatch(updateProductSuc(updateRec));
         }catch(err){
 
-            dispatch(updateAlbumRej(err.code));
+            dispatch(updateProductRej(err.code));
         }
     }
 }
 
-export const deleteAlbumAsync = (id) => {
+export const deleteProductAsync = (id) => {
 
     return async dispatch => {
 
         try{
 
-            await deleteDoc(doc(db, 'albums', `${id}`));
-            dispatch(deleteAlbumSuc());
+            await deleteDoc(doc(db, 'products', `${id}`));
+            dispatch(deleteProductSuc());
         }catch(err){
 
-            dispatch(deleteAlbumRej(err.code))
+            dispatch(deleteProductRej(err.code))
         }
     }
 }

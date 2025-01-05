@@ -4,11 +4,13 @@ import Sidebar from "../Sidebar/Sidebar";
 import { Breadcrumb } from "react-bootstrap";
 import { Link, useNavigate } from "react-router";
 import "./AddProduct.css"; 
-import { useDispatch } from "react-redux";
-import { addAlbumAsync } from "../../services/actions/AlbumAction";
+import { useDispatch, useSelector } from "react-redux";
 import { addProductAsync } from "../../services/actions/ProductAction";
 
 const AddProduct = () => {
+
+    const { admin } = useSelector(state => state.AuthReducer);
+
     const [collapsed, setCollapsed] = useState(false);
 
     const toggleSidebar = () => {
@@ -27,7 +29,7 @@ const AddProduct = () => {
 
     const handleInput = (e) => {
 
-        const { name, value, files, type, checked } = e.target;
+        const { name, value, files } = e.target;
     
         if(name === "pimage" && files.length > 0){
 
@@ -53,6 +55,11 @@ const AddProduct = () => {
     const handleSubmit = (e) => {
         
         e.preventDefault();
+
+        const newProduct = addProduct;
+        
+        newProduct.adminId = admin.uid;
+
         dispatch(addProductAsync(addProduct));
 
         setAddProduct({
@@ -69,7 +76,7 @@ const AddProduct = () => {
     <>
         <Header collapsed={collapsed} toggleSidebar={toggleSidebar} />
         <Sidebar collapsed={collapsed} />
-        <div className={`dashbaord-wrapper ${collapsed ? "sidebar-collapsed" : ""} bg-[#E7EAEE]`} >
+        <div className={`dashboard-wrapper ${collapsed ? "sidebar-collapsed" : ""} bg-[#E7EAEE]`} >
             <div className={`dashboard`}>
                 <div className="container">
                     <div className="row gap-y-8 items-center">
@@ -133,47 +140,6 @@ const AddProduct = () => {
                         </div>
                     </div>
 
-                    <div className="row mx-auto">
-                        <div className="col-12">
-                            <div className="flex justify-center items-center w-full mb-[25px] mt-[25px]">
-                                <form className="w-full h-full bg-white p-[25px] shadow-md rounded">
-                                    <h6 className="text-xl mb-[45px] text-left bg-white">
-                                        Social Information
-                                    </h6>
-
-                                    <div className="mb-6">
-                                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="furl" >Facebook URL</label>
-                                        <input id="furl" type="text" name="facebook" className="gradient-border w-full py-2 px-1 border-b border-gray-300 focus:outline-none" />
-                                    </div>
-
-                                    <div className="mb-6">
-                                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="turl" >Twitter URL</label>
-                                        <input id="turl" type="text" name="twitter" className="gradient-border w-full py-2 px-1 border-b border-gray-300 focus:outline-none" />
-                                    </div>
-
-                                    <div className="mb-6">
-                                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="scurl" >Sound Cloud URL</label>
-                                        <input id="scurl" type="text" name="soundcloud" className="gradient-border w-full py-2 px-1 border-b border-gray-300 focus:outline-none" />
-                                    </div>
-
-                                    <div className="mb-6">
-                                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="surl" >Spotify URL</label>
-                                        <input id="surl" type="text" name="spotify" className="gradient-border w-full py-2 px-1 border-b border-gray-300 focus:outline-none" />
-                                    </div>
-
-                                    <div className="mb-6">
-                                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="yurl" >YouTube URL</label>
-                                        <input id="yurl" type="text" name="youtube" className="gradient-border w-full py-2 px-1 border-b border-gray-300 focus:outline-none" />
-                                    </div>
-
-                                    <div className="flex justify-between items-center">
-                                        <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded focus:outline-none" >Submit</button>
-                                        <button type="button" className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-6 rounded focus:outline-none">Cancel</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>

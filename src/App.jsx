@@ -8,6 +8,8 @@ import ShowAlbum from './components/ShowAlbum/ShowAlbum';
 import SignIn from './components/SignIn/SignIn';
 import SignUp from './components/SignUp/SignUp';
 import EditAlbum from './components/EditAlbum/EditAlbum';
+import ShowProducts from './components/ShowProduct/ShowProducts';
+import EditProduct from './components/EditProduct/EditProduct';
 
 function App() {
 
@@ -16,9 +18,11 @@ function App() {
       <Routes>
         <Route path='/' element={<Dashboard />} ></Route>
         <Route path='/addProduct' element={<AddProduct />} ></Route>
+        <Route path='/editProduct/:id' element={<EditProduct />} ></Route>
         <Route path='/addAlbum' element={<AddAlbum />} ></Route>
         <Route path='/editAlbum/:id' element={<EditAlbum />} ></Route>
         <Route path='/allAlbums' element={<ShowAlbum />} ></Route>
+        <Route path='/allProducts' element={<ShowProducts />} ></Route>
         <Route path='/signIn' element={<SignIn />} ></Route>
         <Route path='/signUp' element={<SignUp />} ></Route>
       </Routes>

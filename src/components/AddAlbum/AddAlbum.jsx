@@ -4,11 +4,14 @@ import Sidebar from "../Sidebar/Sidebar";
 import { Breadcrumb } from "react-bootstrap";
 import { Link, useNavigate } from "react-router";
 import "./AddAlbum.css"; 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addAlbumAsync } from "../../services/actions/AlbumAction";
 
 const AddAlbum = () => {
+
     const [collapsed, setCollapsed] = useState(false);
+
+    const { admin } = useSelector(state => state.AuthReducer);
 
     const toggleSidebar = () => {
         setCollapsed((prev) => !prev);
@@ -57,8 +60,11 @@ const AddAlbum = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        console.log(addAlbum);
-        dispatch(addAlbumAsync(addAlbum));
+        const newAlbum = addAlbum;
+
+        newAlbum.adminId = admin.uid;
+
+        dispatch(addAlbumAsync(newAlbum));
 
         setAddAlbum({
             aname : '',
@@ -78,7 +84,7 @@ const AddAlbum = () => {
     <>
         <Header collapsed={collapsed} toggleSidebar={toggleSidebar} />
         <Sidebar collapsed={collapsed} />
-        <div className={`dashbaord-wrapper ${collapsed ? "sidebar-collapsed" : ""} bg-[#E7EAEE]`} >
+        <div className={`dashboard-wrapper ${collapsed ? "sidebar-collapsed" : ""} bg-[#E7EAEE]`} >
             <div className={`dashboard`}>
                 <div className="container">
                     <div className="row gap-y-8 items-center mb-[25px]">
@@ -130,7 +136,7 @@ const AddAlbum = () => {
 
                                     <div className="mb-6">
                                         <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="albumDura" >Album Duration</label>
-                                        <input id="albumDura" type="number" value={addAlbum.albumDura} onChange={handleInput} name="albumDura" placeholder="Total Time Of The Album Ex:- 25:31" className="gradient-border w-full py-2 px-1 border-b border-gray-300 focus:outline-none" />
+                                        <input id="albumDura" type="number" value={addAlbum.albumDura} onChange={handleInput} name="albumDura" placeholder="Total Time Of The Album Ex:- 25" className="gradient-border w-full py-2 px-1 border-b border-gray-300 focus:outline-none" />
                                     </div>
 
                                     <div className="mb-6">
