@@ -91,10 +91,11 @@ export const signUpAsync = (admins) => {
                 uname : adminCred.user.displayName,
                 email : adminCred.user.email
             }
-
-            localStorage.setItem('loginId', JSON.stringify(signUpAdmin.uid));
             
-            addDoc(collection(db, "admins"), signUpAdmin);
+            addDoc(collection(db, 'admins'), signUpAdmin);
+
+            console.log("Addmin Added");
+            
 
             dispatch(adminSignUpSuc(signUpAdmin));
         })
@@ -124,7 +125,9 @@ export const signInAsync = (admin) => {
                 email : res.user.email,
                 uname : res.user.displayName
             };
+
             localStorage.setItem('loginId', JSON.stringify(signInAdmin.uid));
+
             dispatch(adminSignInSuc(signInAdmin))
         })
         .catch((err) => {
@@ -154,12 +157,20 @@ export const signInWithGoogle = () => {
                 displayName: res.user.displayName,
                 photoURL: res.user.photoURL
             }
-    
-            await addDoc(collection(db, "admins"), adminData);
+
+            const getAdmin = await getDocs(collection(db, 'admins'));
+
+            const adminExist = getAdmin.docs.some(doc => doc.data().uid === adminData.uid);
+            
+            if(!adminExist){
+
+                await addDoc(collection(db, "admins"), adminData);
+            }
             
             localStorage.setItem('loginId', JSON.stringify(adminData.uid));
 
             dispatch(adminSignInSuc(res.user));
+
         }catch(err){
 
             console.log(err);
@@ -177,13 +188,12 @@ export const getAdminId = () => {
 
             let getAdmin = await getDocs(collection(db, 'admins'));
 
-            let singleAdmin = getAdmin.docs.find((doc) => doc.data().uid === getLoginId);
+            getAdmin.forEach((res) => {
+                if(res.data().uid === getLoginId){
 
-            if(singleAdmin){
-
-                let AdminData = singleAdmin.data();
-                dispatch(adminSignInSuc(AdminData));
-            }
+                    dispatch(adminSignInSuc(res.data()));
+                }
+            })
 
         }catch(err){
 

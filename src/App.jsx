@@ -10,6 +10,7 @@ import SignUp from './components/SignUp/SignUp';
 import EditAlbum from './components/EditAlbum/EditAlbum';
 import ShowProducts from './components/ShowProduct/ShowProducts';
 import EditProduct from './components/EditProduct/EditProduct';
+import AllOrders from './components/AllOrders/AllOrders';
 
 function App() {
 
@@ -25,6 +26,7 @@ function App() {
         <Route path='/allProducts' element={<ShowProducts />} ></Route>
         <Route path='/signIn' element={<SignIn />} ></Route>
         <Route path='/signUp' element={<SignUp />} ></Route>
+        <Route path='/orders' element={<AllOrders />} ></Route>
       </Routes>
     </>
   )

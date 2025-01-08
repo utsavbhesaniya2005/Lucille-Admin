@@ -71,12 +71,29 @@ const deleteProductRej = (err) => {
     }
 }
 
+const getOrdersSuc = (orders) => {
+
+    return{
+        type : 'GET_ORDERS_SUC',
+        payload : orders
+    }
+}
+
+const getOrdersRej = (err) => {
+
+    return{
+        type : 'GET_ORDERS_REJ',
+        payload : err
+    }
+}
+
 export const addProductAsync = (data) => {
 
     return async dispatch => {
 
         try{
 
+            
             await addDoc(collection(db, "products"), data);
 
             dispatch(addProductSuc());
@@ -93,7 +110,7 @@ export const getProductAsync = () => {
     return async dispatch => {
 
         try{
-
+            
             const adminLoginId = JSON.parse(localStorage.getItem('loginId'));
 
             let getdata = await getDocs(collection(db, 'products'));
@@ -168,5 +185,37 @@ export const deleteProductAsync = (id) => {
 
             dispatch(deleteProductRej(err.code))
         }
+    }
+}
+
+export const getOrdersAsync = () => {
+
+    return async dispatch => {
+
+        try{
+
+            const adminLoginId = JSON.parse(localStorage.getItem('loginId'));
+
+            let getOrder = await getDocs(collection(db, 'orders'));
+
+            let orders = [];
+
+            getOrder.forEach((res) => {
+                
+                if(adminLoginId === res.data().adminId){
+
+                    let allOrders = res.data();
+                    allOrders.id = doc.id;
+                    orders.push(allOrders);
+                }
+            });
+
+            dispatch(getOrdersSuc(orders));
+            
+        }catch(err){
+            
+            dispatch(getOrdersRej(err.message))
+        }
+
     }
 }

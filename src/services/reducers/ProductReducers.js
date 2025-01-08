@@ -1,5 +1,6 @@
 const initialState = {
     products : [],
+    orders : [],
     product : null,
     isProductCreate : false,
     productErr : null
@@ -66,6 +67,20 @@ const ProductReducers = (state = initialState, action) => {
         case 'DELETE_PRODUCT_REJ' :
             return{
                 ...state,
+                productErr : action.payload
+            }
+
+        case 'GET_ORDERS_SUC' :
+            return{
+                ...state,
+                orders : action.payload,
+                productErr : null
+            }
+
+        case 'GET_ORDERS_REJ' :
+            return{
+                ...state,
+                orders : [],
                 productErr : action.payload
             }
 

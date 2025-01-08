@@ -8,6 +8,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import LibraryMusicIcon from '@mui/icons-material/LibraryMusic';
 import VideocamIcon from '@mui/icons-material/Videocam';
 import { ChevronRightIcon } from '@heroicons/react/24/outline';
+import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
 
 // eslint-disable-next-line react/prop-types
 const Sidebar = ({collapsed}) => {
@@ -58,6 +59,7 @@ const Sidebar = ({collapsed}) => {
                 { name: 'Video Detail', route: '/videoDetail' }
             ]
         },
+        { name: 'Orders', icon: <ShoppingBagIcon />, route: '/orders' },
     ];
 
     const handleClick = (index) => {
@@ -105,7 +107,7 @@ const Sidebar = ({collapsed}) => {
                                     {item.name}
                                 </Link>
                                 
-                                {item.name !== 'Audio' && (
+                                {item.name !== 'Audio' && item.name !== 'Orders' && (
                                     <ChevronRightIcon className={`transition-transform transform ${openDropdown === index ? 'rotate-90' : ''} ml-auto`} width={20} height={20} />
                                 )}
                             </div>

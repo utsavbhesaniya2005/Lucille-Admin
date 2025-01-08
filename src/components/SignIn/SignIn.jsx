@@ -24,7 +24,7 @@ const SignIn = () => {
 
     const validateInputs = () => {
         const email = document.getElementById('email');
-        const password = document.getElementById('pass');
+        const password = document.getElementById('pwd');
 
         let isValid = true;
 
